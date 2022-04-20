@@ -78,4 +78,18 @@ usersRouter.delete("/:userId", async (req, res, next) => {
   }
 });
 
+usersRouter.post("/login", async (req, res, next) => {
+  console.log(" LOGIN REQUEST");
+  try {
+    // 1. Obtain credentials
+    const { email, password } = req.body;
+  } catch (error) {
+    next(error);
+  }
+
+  //2 . Verify credentials
+  //3. If credentials are OK we are going to generate access Token and send it as a response
+  //4. if credentials NOT OK - throw error  (401)
+});
+
 export default usersRouter;
