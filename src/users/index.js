@@ -5,6 +5,8 @@ import BlogPostModel from "../blogPosts/models.js";
 import LikesModel from "../blogPosts/likesModel.js";
 import { generateAccessToken } from "../auth/tools.js";
 import { JWTAuthMiddleware } from "../auth/JWTMiddleware.js";
+import passport from "passport";
+import googleStrategy from "../auth/oauth.js";
 
 const usersRouter = express.Router();
 
@@ -41,8 +43,24 @@ usersRouter.get("/me", JWTAuthMiddleware, async (req, res, next) => {
   }
 });
 
-usersRouter.get("/googleLogin");
-usersRouter.get("/googleRedirect");
+usersRouter.get(
+  "/googleLogin",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+usersRouter.get(
+  "/googleRedirect",
+  passport.authenticate("google"),
+  async (req, res, next) => {
+    try {
+      console.log("Token: ", req.user.token);
+      //res.send({ accessToken: req.user.token });
+      res.redirect(`${process.env.FE_URL}?accessToken=${req.user.token}`);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 usersRouter.get("/:userId", async (req, res, next) => {
   try {

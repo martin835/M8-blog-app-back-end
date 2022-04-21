@@ -6,14 +6,19 @@ import blogPostsRouter from "./blogPosts/index.js";
 import blogPostsCommentsRouter from "./blogPosts/comments/index.js";
 import authorsRouter from "./authors/index.js";
 import usersRouter from "./users/index.js";
+import passport from "passport";
+import googleStrategy from "./auth/oauth.js";
 
 const server = express();
 const port = process.env.port || 5001;
+
+passport.use("google", googleStrategy);
 
 //***********************************Middlewares*******************************************************/
 
 server.use(cors());
 server.use(express.json());
+server.use(passport.initialize());
 
 //***********************************Endpoints*********************************************************/
 
