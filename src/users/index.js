@@ -41,6 +41,9 @@ usersRouter.get("/me", JWTAuthMiddleware, async (req, res, next) => {
   }
 });
 
+usersRouter.get("/googleLogin");
+usersRouter.get("/googleRedirect");
+
 usersRouter.get("/:userId", async (req, res, next) => {
   try {
     const user = await UsersModel.findById(req.params.userId);
