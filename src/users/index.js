@@ -45,7 +45,10 @@ usersRouter.get("/me", JWTAuthMiddleware, async (req, res, next) => {
 
 usersRouter.get(
   "/googleLogin",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    prompt: "select_account",
+  })
 );
 
 usersRouter.get(
